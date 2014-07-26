@@ -81,7 +81,7 @@ Sidebar.Geometry = function ( editor ) {
 
 		var object = editor.selected;
 
-		if ( object && object.geometry ) {
+		if ( object && object.geometry && ! object.hasParentNamed( 'NavigationMesh' ) ) {
 
 			var geometry = object.geometry;
 

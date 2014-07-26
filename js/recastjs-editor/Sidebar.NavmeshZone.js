@@ -6,17 +6,15 @@
  * Released under the MIT license
  */
 /*jshint strict: false, onevar: false, indent:4 */
-/*global _, Backbone, Recast, viewport, $, Sidebar, UI, THREE, TWEEN, Stats */
+/*global _, Backbone, viewport, Sidebar, UI, THREE */
 
 var Zone = Backbone.Model.extend({
-    defaults: {
-        polyMeshes: [],
-        polyRefs: [],
-        polys: [],
-        flags: [],
-    },
     initialize: function () {
         this.set('id', parseInt( (Math.random() * 10000) / 1000, 0) );
+        this.set('polyMeshes', []);
+        this.set('polyRefs', []);
+        this.set('polys', []);
+        this.set('flags', []);
     },
     addPolygon: function (poly) {
         if ( this.get('polyRefs').indexOf( poly.ref ) === -1 ) {
@@ -98,13 +96,10 @@ Sidebar.NavmeshZone = function ( editor, navmeshManager ) {
         window.open().document.write(jsonExport);        
     }
 
-    function endZoning () {
-        document.getElementById( 'new-zone' ).innerHTML = 'Define a new zone';
-        editor.zoning = false;
-
+    function addZoneUI (zone) {
         container.add( new UI.Break( ) );
-        var row   = new UI.Panel();
-        row.zone = editor.currentZone;
+        var row  = new UI.Panel();
+        row.zone = zone;
 
         var label = new UI.Text ( ).setValue( editor.zones.length + 1 ).setDisabled( true );
         var input = new UI.Input( ).setValue( ).setWidth( '100px' ).setDisabled( false ).onChange( function () {
@@ -118,12 +113,19 @@ Sidebar.NavmeshZone = function ( editor, navmeshManager ) {
 
         for (var flagText in editor.flags) {
             row.add( new UI.Text( flagText ).setWidth( '80px' ).setMarginLeft( '20px' ) );
-            var checkbox = new UI.Checkbox( flagText === 'Walkable' ).setClass( 'zone-flag-' + editor.currentZone.id ).setWidth( '100px' );
+            var checkbox = new UI.Checkbox( flagText === 'Walkable' ).setClass( 'zone-flag-' + zone.id ).setWidth( '100px' );
             checkbox.dom.flag = editor.flags[ flagText ];
             row.add( checkbox );
         }
 
         container.add( row );
+    }
+
+    function endZoning () {
+        document.getElementById( 'new-zone' ).innerHTML = 'Define a new zone';
+        editor.zoning = false;
+
+        addZoneUI(editor.currentZone);
 
         editor.zones.add( editor.currentZone );
         editor.currentZone = new Zone();
@@ -139,7 +141,7 @@ Sidebar.NavmeshZone = function ( editor, navmeshManager ) {
     var currentPoly;
 
     var dummyMaterial = new THREE.MeshBasicMaterial({
-        color: 0x0000FF,
+        color: 0x00FF00,
         shading: THREE.FlatShading,
         side: THREE.DoubleSide,
         transparent: true,

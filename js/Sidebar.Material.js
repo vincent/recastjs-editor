@@ -585,7 +585,7 @@ Sidebar.Material = function ( editor ) {
 
 	signals.objectSelected.add( function ( object ) {
 
-		if ( object && object.material ) {
+		if ( object && object.material && ! object.hasParentNamed( 'NavigationMesh' ) ) {
 
 			container.setDisplay( '' );
 

@@ -15,7 +15,7 @@ Sidebar.Navmesh = function ( editor ) {
     var recast = Recast,
         recastParameters = {},
         dummyMaterial = new THREE.MeshBasicMaterial({
-            color: 0x0000FF,
+            color: 0x00FF00,
             shading: THREE.FlatShading,
             side: THREE.DoubleSide,
             transparent: true,
