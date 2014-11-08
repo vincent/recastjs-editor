@@ -1,0 +1,23 @@
+{
+  "name": "recastjs-editor",
+  "version": "1.0.0",
+  "description": "recastjs-editor ===============",
+  "main": "index.js",
+  "dependencies": {
+    "recastjs": "^0.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincent/recastjs-editor.git"
+  },
+  "author": "Vincent Lark <vincent.lark@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincent/recastjs-editor/issues"
+  },
+  "homepage": "https://github.com/vincent/recastjs-editor"
+}
